@@ -1,0 +1,17 @@
+{% extends "layouts/base_management.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Assign Staff to {{ location.name }}{% endblock %}
+
+{% block content %}
+<h2>Assign Staff to {{ location.name }}</h2>
+
+<p>Current staff: {{ location.staff.count }}</p>
+
+<form method="post">
+    {% csrf_token %}
+    {{ formset|crispy }}
+    <button type="submit" class="btn btn-primary">Save Assignments</button>
+    <a href="{% url 'locations:location_list' %}" class="btn btn-secondary">Back</a>
+</form>
+{% endblock %}

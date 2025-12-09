@@ -1,0 +1,28 @@
+{% extends "layouts/base_management.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Edit Staff: {{ staff_user.get_full_name|default:staff_user.username }}{% endblock %}
+
+{% block content %}
+<h2>Edit Staff Member</h2>
+
+<div class="card">
+    <div class="card-body">
+        <h5>{{ staff_user.get_full_name|default:staff_user.username }} ({{ object.get_role_display }})</h5>
+        <p><strong>Email:</strong> {{ staff_user.email }}</p>
+        <p><strong>Date Joined:</strong> {{ object.date_joined|date:"d M Y" }}</p>
+        {% if object.created_by %}
+            <p><strong>Added by:</strong> {{ object.created_by.get_full_name|default:object.created_by.username }}</p>
+        {% endif %}
+    </div>
+</div>
+
+<br>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-success">Save Changes</button>
+    <a href="{% url 'staff_list' %}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

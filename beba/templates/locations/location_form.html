@@ -1,0 +1,21 @@
+{% extends "layouts/base_management.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}{% if object %}Edit{% else %}Create{% endif %} Location{% endblock %}
+
+{% block content %}
+<h2>{% if object %}Edit{% else %}Create{% endif %} {{ object.name|default:"New" }} Location</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form|crispy }}
+    
+    {% if subform %}
+        <h4>Specific Details</h4>
+        {{ subform|crispy }}
+    {% endif %}
+    
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a href="{% url 'locations:location_list' %}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

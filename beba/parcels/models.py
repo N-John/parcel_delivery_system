@@ -84,7 +84,6 @@ class ReturnRequest(models.Model):
     def __str__(self):
         return f"Return for {self.parcel.tracking_number} ({self.reason})"
 
-
 class ParcelHandover(models.Model):
     HANDOVER_TYPES = [
         ("warehouse_to_driver", "Warehouse → Driver"),
@@ -141,8 +140,6 @@ class ParcelLog(models.Model):
 
     def __str__(self):
         return f"{self.parcel.tracking_number} - {self.status} at {self.timestamp}"
-
-
 
 class ParcelPickup(models.Model):
     parcel = models.OneToOneField(Parcel, on_delete=models.CASCADE, related_name="pickup_event")

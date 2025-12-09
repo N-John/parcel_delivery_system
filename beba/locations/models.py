@@ -10,6 +10,7 @@ class Location(models.Model):
     ]
 
     name = models.CharField(max_length=100)
+    location_tag= models.CharField(max_length=20,unique=True)
     location_type = models.CharField(max_length=20, choices=LOCATION_TYPES)
     address = models.TextField()
     city = models.CharField(max_length=100)

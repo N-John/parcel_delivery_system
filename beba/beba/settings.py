@@ -62,7 +62,7 @@ ROOT_URLCONF = 'beba.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / "templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -125,7 +125,19 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+
+# Project-level static folder
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+
+# Where collected static files go (used in production with collectstatic)
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+INSTALLED_APPS += ['crispy_forms']
+CRISPY_TEMPLATE_PACK = 'bootstrap5'

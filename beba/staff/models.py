@@ -27,6 +27,13 @@ class Staff(models.Model):
 
     date_joined = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=True)
+    created_by = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="staff_added_by"
+    )
 
     def __str__(self):
         return f"{self.user.username} ({self.role()})"

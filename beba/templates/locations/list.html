@@ -1,0 +1,79 @@
+{% extends "layouts/base_management.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Locations{% endblock %}
+
+{% block content %}
+<h2>Locations Management</h2>
+
+<!-- Filters -->
+<form method="get" class="mb-4">
+    <div class="row">
+        <div class="col-md-4">
+            <select name="type" class="form-select">
+                <option value="">All Types</option>
+                {% for value, label in location_types %}
+                    <option value="{{ value }}" {% if selected_type == value %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary">Filter</button>
+        </div>
+    </div>
+</form>
+
+<!-- Toggle Active -->
+<div class="mb-3">
+    {% if show_all %}
+        <a href="{% url 'locations:location_list' %}" class="btn btn-outline-secondary btn-sm">Show Active Only</a>
+    {% else %}
+        <a href="{% url 'locations:location_list' %}?show_all=true" class="btn btn-outline-secondary btn-sm">Show All</a>
+    {% endif %}
+    <a href="{% url 'locations:location_create' %}" class="btn btn-success float-end">Add New Location</a>
+</div>
+
+<!-- Table -->
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>City</th>
+            <th>Tag</th>
+            <th>Staff Count</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for location in locations %}
+        <tr>
+            <td>{{ location.name }}</td>
+            <td>{{ location.get_location_type_display }}</td>
+            <td>{{ location.city }}</td>
+            <td>{{ location.location_tag }}</td>
+            <td>{{ location.staff.count }}</td>
+            <td>
+                {% if location.active %}
+                    <span class="badge bg-success">Active</span>
+                {% else %}
+                    <span class="badge bg-secondary">Inactive</span>
+                {% endif %}
+            </td>
+            <td>
+                <a href="{% url 'locations:location_update' location.pk %}" class="btn btn-sm btn-warning">Edit</a>
+                <a href="{% url 'locations:assign_staff' location.pk %}" class="btn btn-sm btn-info">Assign Staff</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="7" class="text-center">No locations found.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- Pagination (if needed) -->
+{% if is_paginated %}
+    <!-- Add pagination links similar to staff list -->
+{% endif %}
+{% endblock %}

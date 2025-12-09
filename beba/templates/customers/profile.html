@@ -1,0 +1,32 @@
+{% extends "layouts/base_customer.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}My Profile{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <h2>My Profile</h2>
+        
+        <form method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+            <a href="{% url 'customers:customer_password_change' %}" class="btn btn-outline-secondary ms-2">Change Password</a>
+        </form>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">Account Info</div>
+            <div class="card-body">
+                <p><strong>Name:</strong> {{ object.name }}</p>
+                <p><strong>Email:</strong> {{ object.email|default:"Not set" }}</p>
+                <p><strong>Phone:</strong> {{ object.phone|default:"Not set" }}</p>
+                <p><strong>Type:</strong> {{ object.get_customer_type_display }}</p>
+                <p><strong>Member Since:</strong> {{ object.created_at|date:"d M Y" }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
